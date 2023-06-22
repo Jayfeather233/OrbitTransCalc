@@ -10,7 +10,7 @@ private:
     double radius;
 
 public:
-    body(double mass) : mass(mass) {}
+    body(double mass) : mass(mass), radius(0) {}
     body(double mass, double radius) : mass(mass), radius(radius) {}
     double get_mass() const { return mass; }
     double get_radius() const { return radius; }
@@ -21,7 +21,7 @@ public:
      */
     double get_velocity(double orbit_radius) const
     {
-        return sqrt(2 * (get_E(orbit_radius) - get_E_g(orbit_radius)));
+        return std::sqrt(2 * (get_E(orbit_radius) - get_E_g(orbit_radius)));
     }
 
     /**
@@ -32,7 +32,7 @@ public:
      */
     double get_velocity(double pe, double ap, bool at_pe) const
     {
-        return sqrt(2 * (get_E(pe, ap) - get_E_g(at_pe ? pe : ap)));
+        return std::sqrt(2 * (get_E(pe, ap) - get_E_g(at_pe ? pe : ap)));
     }
 
     /**
@@ -67,7 +67,7 @@ public:
 
     /**
      * Calculate the transfer deltaV. Using Hohmann Transfer.
-    */
+     */
     std::pair<double, double> get_transfer_deltaV(double from_radius,
                                                   double to_radius) const
     {
@@ -82,23 +82,38 @@ public:
      *                                          2. from_pe -> to_ap -> to_pe
      * Else: 1. from_ap -> to_ap -> to_pe
      *       2. from_pe -> to_pe -> to_ap
-    */
-    std::pair<double, double> get_transfer_deltaV(double from_pe, double from_ap,
-                                                  double to_pe, double to_ap, bool pe2pe) const
+     */
+    std::pair<double, double> get_transfer_deltaV(double from_pe,
+                                                  double from_ap, double to_pe,
+                                                  double to_ap,
+                                                  bool pe2pe) const
     {
-        if(pe2pe){
-            std::pair<double, double> v1(get_velocity(to_pe, from_ap, 0)-get_velocity(from_pe,from_ap,0), get_velocity(to_pe, to_ap, 1) - get_velocity(to_pe, from_ap, 1));
-            std::pair<double, double> v2(get_velocity(from_pe, to_ap, 1)-get_velocity(from_pe,from_ap,1), get_velocity(to_pe, to_ap, 0) - get_velocity(from_pe, to_ap, 0));
-            double dv1 = v1.first+v1.second;
-            double dv2 = v2.first+v2.second;
-            printf("deltaV1: %lf, deltaV2: %lf\n", dv1,dv2);
+        if (pe2pe) {
+            std::pair<double, double> v1(get_velocity(to_pe, from_ap, 0) -
+                                             get_velocity(from_pe, from_ap, 0),
+                                         get_velocity(to_pe, to_ap, 1) -
+                                             get_velocity(to_pe, from_ap, 1));
+            std::pair<double, double> v2(get_velocity(from_pe, to_ap, 1) -
+                                             get_velocity(from_pe, from_ap, 1),
+                                         get_velocity(to_pe, to_ap, 0) -
+                                             get_velocity(from_pe, to_ap, 0));
+            double dv1 = std::abs(v1.first) + std::abs(v1.second);
+            double dv2 = std::abs(v2.first) + std::abs(v2.second);
+            printf("deltaV1: %.6lf, deltaV2: %.6lf\n", dv1, dv2);
             return dv1 < dv2 ? v1 : v2;
-        } else {
-            std::pair<double, double> v1(get_velocity(to_ap, from_ap, 0)-get_velocity(from_pe,from_ap,0), get_velocity(to_ap, to_pe, 1) - get_velocity(to_ap, from_ap, 1));
-            std::pair<double, double> v2(get_velocity(from_pe, to_pe, 1)-get_velocity(from_pe,from_ap,1), get_velocity(to_ap, to_pe, 0) - get_velocity(from_pe, to_pe, 0));
-            double dv1 = v1.first+v1.second;
-            double dv2 = v2.first+v2.second;
-            printf("deltaV1: %lf, deltaV2: %lf\n", dv1,dv2);
+        }
+        else {
+            std::pair<double, double> v1(get_velocity(to_ap, from_ap, 0) -
+                                             get_velocity(from_pe, from_ap, 0),
+                                         get_velocity(to_ap, to_pe, 1) -
+                                             get_velocity(to_ap, from_ap, 1));
+            std::pair<double, double> v2(get_velocity(from_pe, to_pe, 1) -
+                                             get_velocity(from_pe, from_ap, 1),
+                                         get_velocity(to_ap, to_pe, 0) -
+                                             get_velocity(from_pe, to_pe, 0));
+            double dv1 = std::abs(v1.first) + std::abs(v1.second);
+            double dv2 = std::abs(v2.first) + std::abs(v2.second);
+            printf("deltaV1: %.6lf, deltaV2: %.6lf\n", dv1, dv2);
             return dv1 < dv2 ? v1 : v2;
         }
     }
