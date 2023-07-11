@@ -9,16 +9,22 @@ This project is used to calculate how much deltaV you need to change your orbit 
 
 Here is a simple example:
 
+The deltaV calculated by my program from 200km to GEO. (I slightly changed my orbit's inclination because of enough fuel)
+
 ![i1](./img/img1.png)
 
 ![i2](./img/img2.png)
 
-Here is the deltaV calculated by my program.
+If not changing the inclination:
+
+![i5](./img/img5.png)
+
+![i6](./img/img6.png)
+
+Here is the 'real' useage in game.
 
 ![i3](./img/img3.png)
 
 ![i4](./img/img4.png)
-
-Here is the 'real' useage in game.
 
 You can see there is a small difference, due to Principia (n-body mod) and the engine taking time to burn, so the result is not that accurate. But it can still give you a big image of how much dV is needed.
