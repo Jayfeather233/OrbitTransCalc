@@ -1,6 +1,18 @@
 #pragma once
 
-#include "body.h"
+#include "types.h"
 
-const body Earth(5.9722e24, 6371000);
-const body Moon(7.342e22, 1737400);
+/**
+ * Solar System
+*/
+extern const body Sun;
+// Dont forget to minus the radius of the centrial body.
+extern const body Earth;
+extern const body Moon;
+
+/**
+ * Kerbol System
+*/
+extern const body Kerbol;
+extern const body Kerbin;
+extern const body Mun;

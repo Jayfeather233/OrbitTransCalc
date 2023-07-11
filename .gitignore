@@ -35,4 +35,4 @@
 .vscode/
 
 # cmake
-.build/
+build/
