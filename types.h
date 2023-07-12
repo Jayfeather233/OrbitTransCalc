@@ -86,10 +86,10 @@ public:
 
     /**
      * Calculate the transfer deltaV. Using Hohmann Transfer.
-     * If pe2pe == True, then it will act like: 1. from_ap -> to_pe -> to_ap
-     *                                          2. from_pe -> to_ap -> to_pe
-     * Else: 1. from_ap -> to_ap -> to_pe
-     *       2. from_pe -> to_pe -> to_ap
+     * If pe2pe == True, then it will act like: 0. from_ap -> to_pe -> to_ap
+     *                                          1. from_pe -> to_ap -> to_pe
+     * Else: 0. from_ap -> to_ap -> to_pe
+     *       1. from_pe -> to_pe -> to_ap
      */
     dv_result get_transfer_deltaV(const orbit &o, bool pe2pe = 1) const;
 };

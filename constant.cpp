@@ -1,5 +1,5 @@
 #include "types.h"
-#include "body_constant.h"
+#include "constant.h"
 /**
  * Solar System
 */

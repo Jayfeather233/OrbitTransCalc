@@ -47,10 +47,10 @@ double vector_distance(const double v1, const double d1, const double v2, const 
 /**
  * Calculate the transfer deltaV. Using Hohmann Transfer.
  * Inclination changes in second ignition.
- * If pe2pe == True, then it will act like: 1. from_ap -> to_pe -> to_ap
- *                                          2. from_pe -> to_ap -> to_pe
- * Else: 1. from_ap -> to_ap -> to_pe
- *       2. from_pe -> to_pe -> to_ap
+ * If pe2pe == True, then it will act like: 0. from_ap -> to_pe -> to_ap
+ *                                          1. from_pe -> to_ap -> to_pe
+ * Else: 0. from_ap -> to_ap -> to_pe
+ *       1. from_pe -> to_pe -> to_ap
  */
 dv_result orbit::get_transfer_deltaV(const orbit &o, bool pe2pe) const
 {
@@ -66,7 +66,7 @@ dv_result orbit::get_transfer_deltaV(const orbit &o, bool pe2pe) const
         } else {
             orbit transfer_o1 = orbit(this->centrial_body, this->ap, o.ap, this->inc);
             orbit transfer_o2 = orbit(this->centrial_body, this->pe, o.pe, this->inc);
-            ans1 = std::make_pair(0, std::make_pair(std::abs(transfer_o1.get_velocity(0) - this->get_velocity(1)),
+            ans1 = std::make_pair(0, std::make_pair(std::abs(transfer_o1.get_velocity(1) - this->get_velocity(0)),
                                     vector_distance(transfer_o1.get_velocity(0), transfer_o1.get_inc(), o.get_velocity(0), o.get_inc())));
             ans2 = std::make_pair(1, std::make_pair(std::abs(transfer_o2.get_velocity(1) - this->get_velocity(1)),
                                     vector_distance(transfer_o2.get_velocity(0), -transfer_o2.get_inc(), o.get_velocity(1), o.get_inc())));

@@ -20,14 +20,15 @@ int main(){
     orbit i3 = orbit(Earth, 35786151);              // GEO
     dv_result result1 = i1.get_transfer_deltaV(i2);  // calculate dV
     dv_result result2 = i2.get_transfer_deltaV(i3);  // calculate dV
-    printf("%d %lf %lf\n", result1.first, result1.second.first, result1.second.second);
-    printf("%d %lf %lf\n", result2.first, result2.second.first, result2.second.second);
+    // printf("%d %lf %lf\n", result1.first, result1.second.first, result1.second.second);
+    // printf("%d %lf %lf\n", result2.first, result2.second.first, result2.second.second);
 
     // simpler Transfer TEST //
     orbit i4 = orbit(Earth, 200000, 200000, 19.61); // 200km 19.61° LEO at Wenchang
     orbit i5 = orbit(Earth, 35786151);              // GEO
     dv_result result3 = i4.get_transfer_deltaV(i5);  // calculate dV
-    printf("%d %lf %lf\n", result3.first, result3.second.first, result3.second.second);
+    // printf("%d %lf %lf\n", result3.first, result3.second.first, result3.second.second);
+    show_result(i4, i5, result3);
 
     return 0;
 }
