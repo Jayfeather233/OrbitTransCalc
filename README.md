@@ -4,6 +4,8 @@ Calculate deltaV for orbit transfer.
 
 ---
 
+This is just a library. No UI. Please refer to `main.cpp` for useage example.
+
 This project is used to calculate how much deltaV you need to change your orbit. This idea comes from a game: [KSP](https://store.steampowered.com/app/220200/Kerbal_Space_Program/) and its realistic [mods](https://forum.kerbalspaceprogram.com/topic/190040-rp-1-realistic-progression-one-for-ksp-1123/). It only works for ascending/descending node only at pe/ap and using Hohmann Transfer.
 
 It's basically accurate if you don't change your central body. You **can** calculate the planetary transfer, but the result is a little rough.
