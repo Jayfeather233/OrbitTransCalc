@@ -6,9 +6,10 @@
  * Solar System
 */
 extern const body Sun;
-// Dont forget to minus the radius of the centrial body.
 extern const body Earth;
 extern const body Moon;
+extern const body Mars;
+extern const body Neptune;
 
 /**
  * Kerbol System

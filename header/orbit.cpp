@@ -34,10 +34,10 @@ double orbit::get_velocity(bool at_pe) const
  * pe, ap starts from ground.
  * assume the spacecraft has mass 1kg
  */
-double orbit::get_E() const
+long double orbit::get_E() const
 {
-    return -G * centrial_body.get_mass() /
-           (pe + ap + 2 * centrial_body.get_radius());
+    return -(long double)1.0* centrial_body.get_mass() /
+           (pe + ap + 2 * centrial_body.get_radius()) * G;
 }
 
 double vector_distance(const double v1, const double d1, const double v2, const double d2){
@@ -71,38 +71,45 @@ dv_result orbit::get_transfer_deltaV(const orbit &o, bool pe2pe) const
             ans2 = std::make_pair(1, std::make_pair(std::abs(transfer_o2.get_velocity(1) - this->get_velocity(1)),
                                     vector_distance(transfer_o2.get_velocity(0), -transfer_o2.get_inc(), o.get_velocity(1), o.get_inc())));
         }
+        double v1 = ans1.second.first + ans1.second.second;
+        double v2 = ans2.second.first + ans2.second.second;
+        return v1 > v2 ? ans2 : ans1;
+    } else if(this->centrial_body.get_orbit().get_centrial_body() == o.get_centrial_body()){
+        double l = 0.0, r = 10000.0, mid, t1, t2;
+        int f = 1;
+        t2 = this->centrial_body.get_orbit().get_velocity(true);
+        if(this->centrial_body.get_orbit().get_pe() > o.get_pe()){
+            f = 0;
+        }
+        while(r-l>=0.1){
+            mid = (l+r)/2.0;
+            if(f){
+                t1 = this->centrial_body.get_after_escape_velocity(this->get_pe(), this->get_velocity(true) + mid);
+                t1 += t2;
+                if(o.centrial_body.get_after_escape_velocity(this->centrial_body.get_orbit().get_pe(), t1) >= 0.1){
+                    r = mid;
+                }
+                else {
+                    if (create_orbit_v(o.get_centrial_body(), this->centrial_body.get_orbit().get_pe(), t1).get_ap() < o.get_ap()){
+                        l = mid;
+                    } else {
+                        r = mid;
+                    }
+                }
+            } else {
+                t1 = this->centrial_body.get_after_escape_velocity(this->get_ap(), this->get_velocity(false) + mid);
+                t1 = t2 - t1;
+                if (create_orbit_v(o.get_centrial_body(), this->get_ap(), t1).get_pe() > o.get_ap()){
+                    l = mid;
+                } else {
+                    r = mid;
+                }
+            }
+        }
+        return std::make_pair(1, std::make_pair(r, 0.0));
     } else {
         // Not supported yet.
     }
-    double v1 = ans1.second.first + ans1.second.second;
-    double v2 = ans2.second.first + ans2.second.second;
-    return v1 > v2 ? ans2 : ans1;
-    // if (pe2pe) {
-    //     std::pair<double, double> v1(get_velocity(to_pe, from_ap, 0) -
-    //                                      get_velocity(from_pe, from_ap, 0),
-    //                                  get_velocity(to_pe, to_ap, 1) -
-    //                                      get_velocity(to_pe, from_ap, 1));
-    //     std::pair<double, double> v2(get_velocity(from_pe, to_ap, 1) -
-    //                                      get_velocity(from_pe, from_ap, 1),
-    //                                  get_velocity(to_pe, to_ap, 0) -
-    //                                      get_velocity(from_pe, to_ap, 0));
-    //     double dv1 = std::abs(v1.first) + std::abs(v1.second);
-    //     double dv2 = std::abs(v2.first) + std::abs(v2.second);
-    //     return dv1 < dv2 ? std::make_pair(0, v1) : std::make_pair(1, v2);
-    // }
-    // else {
-    //     std::pair<double, double> v1(get_velocity(to_ap, from_ap, 0) -
-    //                                      get_velocity(from_pe, from_ap, 0),
-    //                                  get_velocity(to_ap, to_pe, 1) -
-    //                                      get_velocity(to_ap, from_ap, 1));
-    //     std::pair<double, double> v2(get_velocity(from_pe, to_pe, 1) -
-    //                                      get_velocity(from_pe, from_ap, 1),
-    //                                  get_velocity(to_ap, to_pe, 0) -
-    //                                      get_velocity(from_pe, to_pe, 0));
-    //     double dv1 = std::abs(v1.first) + std::abs(v1.second);
-    //     double dv2 = std::abs(v2.first) + std::abs(v2.second);
-    //     return dv1 < dv2 ? std::make_pair(0, v1) : std::make_pair(1, v2);
-    // }
 }
 
 orbit orbit::create_orbit_e(const body &c_body, const double pe, const double e,
@@ -115,7 +122,8 @@ orbit orbit::create_orbit_e(const body &c_body, const double pe, const double e,
 orbit orbit::create_orbit_v(const body &c_body, const double h, const double v,
                             const double inc)
 {
-    double h2 = -G * c_body.get_mass() / (c_body.get_E_g(h) + 1.0 / 2 * v * v) -
+    // printf("%.9lf\n", (double)(c_body.get_E_g(h) + 0.5 * v * v));
+    double h2 = -(long double)1.0 * c_body.get_mass() / (c_body.get_E_g(h) + 0.5 * v * v) * G -
                 h - 2 * c_body.get_radius();
     return (h2 > h) ? orbit(c_body, h, h2, inc) : orbit(c_body, h2, h, -inc);
 }

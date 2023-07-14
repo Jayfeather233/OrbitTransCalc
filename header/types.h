@@ -9,33 +9,6 @@ class orbit;
 
 typedef std::pair<int, std::pair<double, double>> dv_result;
 
-class body {
-private:
-    const double mass;
-    const double radius;
-    const orbit &orb;
-
-public:
-    body(const orbit &o, const double mass, const double radius);
-    body(const double mass, const double radius);
-
-    inline const double get_mass() const { return mass; }
-    inline const double get_radius() const { return radius; }
-    inline const orbit &get_orbit() const { return orb; }
-
-    /**
-     * Used to get the Gravitational Potential Energy
-     * Here `height` means height from ground.
-     * assume the spacecraft has mass 1kg
-     */
-    inline double get_E_g(double height) const
-    {
-        return -G * mass / (height + this->radius);
-    }
-
-    bool operator==(const body &o) const;
-};
-
 class orbit {
 private:
     const body &centrial_body;
@@ -68,6 +41,7 @@ public:
     inline double get_pe() const { return pe; }
     inline double get_ap() const { return ap; }
     inline double get_inc() const { return inc; }
+    inline const body &get_centrial_body() const { return centrial_body; }
 
     /**
      * get orbiting velocity.
@@ -75,14 +49,14 @@ public:
      * Otherwise return it at ap.
      * pe, ap starts from ground.
      */
-    double get_velocity(bool at_pe) const;
+    double get_velocity(bool at_pe = true) const;
 
     /**
      * Used to get the Mechanical energy
      * pe, ap starts from ground.
      * assume the spacecraft has mass 1kg
      */
-    double get_E() const;
+    long double get_E() const;
 
     /**
      * Calculate the transfer deltaV. Using Hohmann Transfer.
@@ -91,5 +65,38 @@ public:
      * Else: 0. from_ap -> to_ap -> to_pe
      *       1. from_pe -> to_pe -> to_ap
      */
-    dv_result get_transfer_deltaV(const orbit &o, bool pe2pe = 1) const;
+    dv_result get_transfer_deltaV(const orbit &o, bool pe2pe = true) const;
+};
+
+class body {
+private:
+    const long double mass;
+    const long double radius;
+    const orbit orb;
+
+public:
+    body(const orbit &o, const long double mass, const long double radius);
+    body(const long double mass, const long double radius);
+
+    inline const long double get_mass() const { return mass; }
+    inline const long double get_radius() const { return radius; }
+    inline const orbit &get_orbit() const { return orb; }
+
+    /**
+     * Used to get the Gravitational Potential Energy
+     * Here `height` means height from ground.
+     * assume the spacecraft has mass 1kg
+     */
+    inline long double get_E_g(const double height) const
+    {
+        return -(long double)1.0 * mass / (height + this->radius) * G;
+    }
+
+    bool operator==(const body &o) const;
+
+    /**
+     * When at `h` height, `v` speed,
+     * return the velocity after escape.
+     */
+    double get_after_escape_velocity(const double h, const double v) const;
 };

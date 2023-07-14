@@ -29,6 +29,18 @@ int main(){
     orbit i5 = orbit(Earth, 35786151);              // GEO
     dv_result result3 = i4.get_transfer_deltaV(i5);  // calculate dV
     show_result(i4, i5, result3);
+    printf("\n");
+
+    // planet transfer test. Fly-by. Does not count inclination //
+    orbit i6 = orbit(Earth, 300000, 300000, 0); 
+    dv_result result4 = i6.get_transfer_deltaV(Mars.get_orbit());
+    printf("Mars:\n");
+    show_result(result4); // should around 3.6k, calculate 3.7k (why?)
+    printf("\n");
+    
+    dv_result result5 = i6.get_transfer_deltaV(Neptune.get_orbit());
+    printf("Neptune:\n");
+    show_result(result5); // should around 8.2k, calculate 8.15k
 
     return 0;
 }
