@@ -22,7 +22,7 @@ int main(){
     dv_result result2 = i2.get_transfer_deltaV(i3);  // calculate dV
     show_result(i1, i2, result1, true, true);
     show_result(i2, i3, result2, true, false);
-    printf("------------------\n");
+    printf("\n");
 
     // simpler Transfer TEST //
     orbit i4 = orbit(Earth, 200000, 200000, 19.61); // 200km 19.61° LEO at Wenchang

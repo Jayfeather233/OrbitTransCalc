@@ -1,7 +1,7 @@
 #pragma once
 
-#include "constant.h"
 #include "types.h"
+#include "celestial_bodies.h"
 
 #include <cstdio>
 
