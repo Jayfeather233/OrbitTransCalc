@@ -29,19 +29,26 @@ public:
      * e: Eccentricity
      * Create an orbit from periapsis and eccentricity
      */
-    static orbit create_orbit_e(const body &c_body, const double pe,
+    static orbit create_orbit_E(const body &c_body, const double pe,
                                 const double e, const double inc = 0);
 
     /**
      * Create an orbit from height and velocity
      */
-    static orbit create_orbit_v(const body &c_body, const double h,
+    static orbit create_orbit_V(const body &c_body, const double h,
                                 const double v, const double inc = 0);
+    /**
+     * Create an orbit from height and period
+     */
+    static orbit create_orbit_T(const body &c_body, const double h,
+                                const double t, const double inc = 0);
 
     inline double get_pe() const { return pe; }
     inline double get_ap() const { return ap; }
     inline double get_inc() const { return inc; }
     inline const body &get_centrial_body() const { return centrial_body; }
+    double get_Ecc() const;
+    double get_T() const;
 
     /**
      * get orbiting velocity.
