@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int main(){
+int notmain(){
     // orbit i1 = orbit(Earth, 200000, 200000, 19.61);
     // orbit i2 = orbit(Earth, 1000000, 4500000, 19.61);
     // dv_result result1 = i1.get_transfer_deltaV(i2);
@@ -25,48 +25,49 @@ int main(){
     // dv_result result = i1.get_transfer_deltaV(i2);
     // show_result(i1,i2, result);
 
-    orbit i2 = orbit::create_orbit_T(Earth, 500000, 43082, 63.4); // Molniya orbit
-    printf("%lf %lf\n", i2.get_pe(), i2.get_ap());
-    printf("%lf\n",i2.get_Ecc());
+    // orbit i2 = orbit::create_orbit_T(Earth, 500000, 43082, 63.4); // Molniya orbit
+    // printf("%lf %lf\n", i2.get_pe(), i2.get_ap());
+    // printf("%lf\n",i2.get_Ecc());
 }
 
-int notmain(){
+int main(){
 
     // speed TEST //
     // orbit o = orbit::create_orbit_V(Earth, 35786151, 3074.924491, 0);
     // printf("%lf %lf\n", o.get_pe(), o.get_ap());
 
-    // orbit p = orbit(Earth, 35786151);
-    // printf("%lf\n", p.get_velocity(0));
-    // speed END //
+    // orbit i1 = orbit(Earth, 200000, 200000, 0);
+    // orbit i2 = orbit(Earth, 200000, Moon.get_orbit().get_pe(), Moon.get_orbit().get_inc());
+    // dv_result u = i1.get_transfer_deltaV(i2);
+    // show_result(i1, i2, u);
 
     // Transfer TEST //
     orbit i1 = orbit(Earth, 200000, 200000, 19.61); // 200km 19.61° LEO at Wenchang
-    orbit i2 = orbit(Earth, 200000, 35786151, 17.08);
+    orbit i2 = orbit(Earth, 200000, 35786151, 17.5);
     orbit i3 = orbit(Earth, 35786151);              // GEO
     dv_result result1 = i1.get_transfer_deltaV(i2);  // calculate dV
     dv_result result2 = i2.get_transfer_deltaV(i3);  // calculate dV
-    show_result(i1, i2, result1, true, true);
+    show_result(i1, i3, result1, true, true);
     show_result(i2, i3, result2, true, false);
-    printf("\n");
+    printf("total: %-8.3e\n", result1.second.first + result1.second.second + result2.second.first + result2.second.second);
 
-    // simpler Transfer TEST //
+    // // simpler Transfer TEST //
     orbit i4 = orbit(Earth, 200000, 200000, 19.61); // 200km 19.61° LEO at Wenchang
     orbit i5 = orbit(Earth, 35786151);              // GEO
     dv_result result3 = i4.get_transfer_deltaV(i5);  // calculate dV
     show_result(i4, i5, result3);
-    printf("\n");
+    printf("total: %-8.3e\n", result3.second.first + result3.second.second);
 
     // planet transfer test. Fly-by. Does not count inclination //
-    orbit i6 = orbit(Earth, 300000, 300000, 0); 
-    dv_result result4 = i6.get_transfer_deltaV(Mars.get_orbit());
-    printf("Mars:\n");
-    show_result(result4); // should around 3.6k, calculate 3.7k (why?)
-    printf("\n");
+    // orbit i6 = orbit(Earth, 300000, 300000, 0); 
+    // dv_result result4 = i6.get_transfer_deltaV(Mars.get_orbit());
+    // printf("Mars:\n");
+    // show_result(result4); // should around 3.6k, calculate 3.7k (why?)
+    // printf("\n");
     
-    dv_result result5 = i6.get_transfer_deltaV(Neptune.get_orbit());
-    printf("Neptune:\n");
-    show_result(result5); // should around 8.2k, calculate 8.15k
+    // dv_result result5 = i6.get_transfer_deltaV(Neptune.get_orbit());
+    // printf("Neptune:\n");
+    // show_result(result5); // should around 8.2k, calculate 8.15k
 
     return 0;
 }

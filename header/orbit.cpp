@@ -76,19 +76,21 @@ dv_result orbit::get_transfer_deltaV(const orbit &o, bool pe2pe) const
             orbit transfer_o2 =
                 orbit(this->centrial_body, this->pe, o.ap, this->inc);
             ans1 = std::make_pair(
-                0, std::make_pair(std::abs(transfer_o1.get_velocity(0) -
-                                           this->get_velocity(0)),
-                                  vector_distance(transfer_o1.get_velocity(1),
-                                                  transfer_o1.get_inc(),
-                                                  o.get_velocity(1),
-                                                  o.get_inc())));
+                0, std::make_pair(
+                       vector_distance(transfer_o1.get_velocity(0),
+                                       transfer_o1.get_inc(),
+                                       this->get_velocity(0), this->get_inc()),
+                       vector_distance(transfer_o1.get_velocity(1),
+                                       transfer_o1.get_inc(), o.get_velocity(1),
+                                       o.get_inc())));
             ans2 = std::make_pair(
-                1, std::make_pair(std::abs(transfer_o2.get_velocity(1) -
-                                           this->get_velocity(1)),
-                                  vector_distance(transfer_o2.get_velocity(0),
-                                                  transfer_o2.get_inc(),
-                                                  o.get_velocity(0),
-                                                  o.get_inc())));
+                1, std::make_pair(
+                       vector_distance(transfer_o2.get_velocity(1),
+                                       transfer_o2.get_inc(),
+                                       this->get_velocity(1), this->get_inc()),
+                       vector_distance(transfer_o2.get_velocity(0),
+                                       transfer_o2.get_inc(), o.get_velocity(0),
+                                       o.get_inc())));
         }
         else {
             orbit transfer_o1 =
@@ -96,19 +98,21 @@ dv_result orbit::get_transfer_deltaV(const orbit &o, bool pe2pe) const
             orbit transfer_o2 =
                 orbit(this->centrial_body, this->pe, o.pe, this->inc);
             ans1 = std::make_pair(
-                0, std::make_pair(std::abs(transfer_o1.get_velocity(1) -
-                                           this->get_velocity(0)),
-                                  vector_distance(transfer_o1.get_velocity(0),
-                                                  transfer_o1.get_inc(),
-                                                  o.get_velocity(0),
-                                                  o.get_inc())));
+                0, std::make_pair(
+                       vector_distance(transfer_o1.get_velocity(1),
+                                       transfer_o1.get_inc(),
+                                       this->get_velocity(0), this->get_inc()),
+                       vector_distance(transfer_o1.get_velocity(0),
+                                       transfer_o1.get_inc(), o.get_velocity(0),
+                                       o.get_inc())));
             ans2 = std::make_pair(
-                1, std::make_pair(std::abs(transfer_o2.get_velocity(1) -
-                                           this->get_velocity(1)),
-                                  vector_distance(transfer_o2.get_velocity(0),
-                                                  -transfer_o2.get_inc(),
-                                                  o.get_velocity(1),
-                                                  o.get_inc())));
+                1, std::make_pair(
+                       vector_distance(transfer_o2.get_velocity(1),
+                                       transfer_o2.get_inc(),
+                                       this->get_velocity(1), this->get_inc()),
+                       vector_distance(transfer_o2.get_velocity(0),
+                                       -transfer_o2.get_inc(),
+                                       o.get_velocity(1), o.get_inc())));
         }
         double v1 = ans1.second.first + ans1.second.second;
         double v2 = ans2.second.first + ans2.second.second;
@@ -187,7 +191,8 @@ orbit orbit::create_orbit_T(const body &c_body, const double h, const double t,
 {
     // printf("%.9lf\n", (double)(c_body.get_E_g(h) + 0.5 * v * v));
     double h2 =
-        std::pow(c_body.get_mass() * G / (4 * M_PI * M_PI) * t * t, 1.0 / 3.0)*2 -
+        std::pow(c_body.get_mass() * G / (4 * M_PI * M_PI) * t * t, 1.0 / 3.0) *
+            2 -
         h - 2 * c_body.get_radius();
     return (h2 > h) ? orbit(c_body, h, h2, inc) : orbit(c_body, h2, h, -inc);
 }
