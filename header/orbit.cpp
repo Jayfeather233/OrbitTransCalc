@@ -196,3 +196,12 @@ orbit orbit::create_orbit_T(const body &c_body, const double h, const double t,
         h - 2 * c_body.get_radius();
     return (h2 > h) ? orbit(c_body, h, h2, inc) : orbit(c_body, h2, h, -inc);
 }
+
+orbit orbit::create_rorbit_T(const body &c_body, const double t,
+                             const double inc)
+{
+    double r =
+        std::pow((G * c_body.get_mass()) / std::pow(2 * M_PI / t, 2), 1.0 / 3) -
+        c_body.get_radius();
+    return orbit(c_body, r, r, inc);
+}

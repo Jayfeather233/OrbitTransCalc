@@ -32,10 +32,32 @@ int notmain(){
 
 int main(){
 
+    // orbit i1 = orbit(Earth, 210000, 210000, 38);
+    // //orbit i2 = orbit::create_orbit_E(Earth, 210000, 0.04, 19.61);
+    // orbit i2 = orbit(Earth, 210000, 860000, 38);
+    // orbit i3 = orbit(Earth, 860000, 4600000, 38);
+    // dv_result result1 = i1.get_transfer_deltaV(i2);
+    // dv_result result2 = i2.get_transfer_deltaV(i3, false);
+    // show_result(i1, i2, result1, true, true);
+    // show_result(i2, i3, result2, false, false);
+
+    orbit GEO = orbit::create_rorbit_T(Earth, 23*3600+56*60+4);
+    printf("%.3lf", GEO.get_ap());
+
+    orbit i1 = orbit(Earth, 210000, 210000, 63.4);
+    orbit i2 = orbit::create_orbit_T(Earth, 597000, 11*3600+58*60+2, 63.4);
+    printf("pe:%8.3e ap:%8.3e ecc:%8.3e\n", i2.get_pe(), i2.get_ap(), i2.get_Ecc());
+    dv_result result1 = i1.get_transfer_deltaV(i2);
+    show_result(i1, i2, result1);
+
     // speed TEST //
     // orbit o = orbit::create_orbit_V(Earth, 35786151, 3074.924491, 0);
     // printf("%lf %lf\n", o.get_pe(), o.get_ap());
 
+    // orbit i1 = orbit(Earth, 200000, 200000, 0);
+    // orbit i2 = orbit(Earth, 200000, Moon.get_orbit().get_pe(), Moon.get_orbit().get_inc());
+    // dv_result u = i1.get_transfer_deltaV(i2);
+    // show_result(i1, i2, u);
     // orbit i1 = orbit(Earth, 200000, 200000, 0);
     // orbit i2 = orbit(Earth, 200000, Moon.get_orbit().get_pe(), Moon.get_orbit().get_inc());
     // dv_result u = i1.get_transfer_deltaV(i2);
@@ -51,11 +73,14 @@ int main(){
     show_result(i2, i3, result2, true, false);
     printf("total: %-8.3e\n", result1.second.first + result1.second.second + result2.second.first + result2.second.second);
 
-    // // simpler Transfer TEST //
-    orbit i4 = orbit(Earth, 200000, 200000, 19.61); // 200km 19.61° LEO at Wenchang
-    orbit i5 = orbit(Earth, 35786151);              // GEO
+    // simpler Transfer TEST //
+    orbit i4 = orbit(Earth, 210000, 210000, 45); // 200km 19.61° LEO at Wenchang
+    orbit i5 = orbit(Earth, 210000, 1000000, 45);
+    orbit i6 = orbit(Earth, 1000000, 5000000, 45);
     dv_result result3 = i4.get_transfer_deltaV(i5);  // calculate dV
-    show_result(i4, i5, result3);
+    dv_result result4 = i5.get_transfer_deltaV(i6, false);  // calculate dV
+    show_result(i4, i5, result3, true, true);
+    show_result(i5, i6, result4, false, false);
     printf("total: %-8.3e\n", result3.second.first + result3.second.second);
 
     // planet transfer test. Fly-by. Does not count inclination //

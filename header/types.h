@@ -42,6 +42,11 @@ public:
      */
     static orbit create_orbit_T(const body &c_body, const double h,
                                 const double t, const double inc = 0);
+    /**
+     * Create an circle orbit from period
+     */
+    static orbit create_rorbit_T(const body &c_body, const double t, const double inc = 0);
+    
 
     inline double get_pe() const { return pe; }
     inline double get_ap() const { return ap; }
