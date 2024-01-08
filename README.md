@@ -2,6 +2,8 @@
 
 Calculate deltaV for orbit transfer.
 
+A .ipynb file inside can calculate maximum downrange and launch angle with given total dv and burning time.
+
 **Attantion:** Only three out of six orbital elements are used in my program to simplify my code. They are: eccentricity *(e)*, semimajor axis *(a)*, inclination *(i)*. Others like Longitude of the ascending node *(Ω)*, Argument of periapsis *(ω)*, True anomaly *(ν, θ, or f)* at epoch *(t0)* are not defined or assume to be 0.
 
 ---
