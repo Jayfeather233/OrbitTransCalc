@@ -10,6 +10,7 @@ extern const body Earth;
 extern const body Moon;
 extern const body Mars;
 extern const body Neptune;
+extern const body Venus;
 
 /**
  * Kerbol System
