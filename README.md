@@ -1,3 +1,7 @@
+If there is any feature you want to use that is not included in my program, please consider using [GMAT](https://gmat.sourceforge.net/) :3.
+
+---
+
 # OrbitTransCalc
 
 Calculate deltaV for orbit transfer.
@@ -50,6 +54,6 @@ Result:
 
 ![img8](./img/img8.png)
 
-The result with Mars transfer is much difference (around 30%) to the actual dV requires. I haven't figure out why.
+The result with Mars transfer is much difference (around 30%) to the actual dV requires.
 
-But the Neptune transfer result is correct.
+NOTE: I recently studied Restricted Three-Body Problem and I can tell you that my code is just a bad approximation solution. Please just use [cheating paper(dV-map)](https://www.reddit.com/r/KerbalSpaceProgram/comments/3plsvd/for_you_rss_users_a_very_helpful_dv_map_of_our/) with [Transfer Window Planner](https://github.com/Nazfib/TransferWindowPlanner) by alexmoon & TriggerAu & Nazfib. 

@@ -38,7 +38,7 @@ int main(){
     // show_result(i1, i2, result);
 
     // orbit i1 = orbit(Venus, 350000);
-    // orbit i2 = orbit::create_orbit_V(Venus, 350000, i1.get_velocity()+1500);
+    // orbit i2 = orbit::create_orbit_V(Venus, 350000, i1.get_velocity()+3373-1687);
     // dv_result result = i1.get_transfer_deltaV(i2);
     // show_result(i1,i2,result);
 
@@ -92,6 +92,7 @@ int main(){
     dv_result result2 = i2.get_transfer_deltaV(i3);  // calculate dV
     show_result(i1, i2, result1, true, true);
     show_result(i2, i3, result2, true, false);
+    printf("%.6lf\n", i3.get_T());
     printf("total: %-8.3e\n", result1.second.first + result1.second.second + result2.second.first + result2.second.second);
 
     // simpler Transfer TEST //
@@ -105,9 +106,9 @@ int main(){
     // printf("total: %-8.3e\n", result3.second.first + result3.second.second);
 
     // planet transfer test. Fly-by. Does not count inclination //
-    // orbit i6 = orbit(Earth, 300000, 300000, 0); 
-    // dv_result result4 = i6.get_transfer_deltaV(Mars.get_orbit());
-    // printf("Mars:\n");
+    // orbit i6 = orbit(Earth, 200000, 200000, 0); 
+    // dv_result result4 = i6.get_transfer_deltaV(Ceres.get_orbit());
+    // printf("Ceres:\n");
     // show_result(result4); // should around 3.6k, calculate 3.7k (why?)
     // printf("\n");
     
