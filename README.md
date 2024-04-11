@@ -20,6 +20,8 @@ It's basically accurate if you don't change your central body. You **can** calcu
 
 Please use `cmake` to build this project.
 
+I have a `./start.sh` that automatically use `cmake` to compile and run the code in Linux. If you are using Linux distributions, you can just run the script. If you are using Windows, ~~good luck to you~~ you can manually compile it.
+
 ---
 
 ### For non-planetary transfer
