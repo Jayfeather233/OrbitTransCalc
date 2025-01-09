@@ -46,10 +46,21 @@ int main(){
     // dv_result result2 = i1.get_transfer_deltaV(i3);
     // show_result(i1, i3, result2);
 
-    // orbit i1 = orbit(Earth, 210000, 210000, 38);
+    // orbit i = orbit::create_orbit_E(Earth, 3500000, 0.75);
+    // printf("%f %f", i.get_pe(), i.get_ap());
+
+    orbit i1 = orbit(Earth, 500000, 500000);
+    orbit i2 = orbit(Earth, 500000, 63000000);
+    orbit i3 = orbit(Earth, 3500000, 63000000);
+    auto r1 = i1.get_transfer_deltaV(i2);
+    auto r2 = i2.get_transfer_deltaV(i3);
+    show_result(r1);
+    show_result(r2);
+
+    // orbit i1 = orbit(Earth, 210000, 210000, 64);
     // //orbit i2 = orbit::create_orbit_E(Earth, 210000, 0.04, 19.61);
-    // orbit i2 = orbit(Earth, 210000, 860000, 38);
-    // orbit i3 = orbit(Earth, 860000, 4600000, 38);
+    // orbit i2 = orbit(Earth, 210000, 860000, 64);
+    // orbit i3 = orbit(Earth, 860000, 4600000, 64);
     // dv_result result1 = i1.get_transfer_deltaV(i2);
     // dv_result result2 = i2.get_transfer_deltaV(i3, false);
     // show_result(i1, i2, result1, true, true);
@@ -65,21 +76,25 @@ int main(){
     // show_result(i1, i2, result1);
 
     // orbit i1 = orbit(Kerbin, 80000);
-    // orbit i2 = orbit::create_rorbit_T(Kerbin, 24*3600);
+    // orbit i2 = orbit(Kerbin, 4300000, 6600000, 4.2);
     // dv_result result1 = i1.get_transfer_deltaV(i2);
     // show_result(i1, i2, result1);
+    
+    // orbit i3 = orbit(Kerbin, 100000);
+    // orbit i4 = orbit::create_orbit_V(Kerbin, 100000, i3.get_velocity()-67);
+    // printf("%.3lf %.3lf", i4.get_pe(), i4.get_ap());
 
     // speed TEST //
     // orbit o = orbit::create_orbit_V(Earth, 35786151, 3074.924491, 0);
     // printf("%lf %lf\n", o.get_pe(), o.get_ap());
 
-    orbit i1 = orbit(Earth, 250000, 350000, 90);
-    orbit i2 = orbit(Earth, 250000, 1075000, 90);
-    orbit i3 = orbit(Earth, 0, 1075000, 90);
-    dv_result u = i2.get_transfer_deltaV(i1);
-    dv_result u1 = i3.get_transfer_deltaV(i2);
-    show_result(i1, i2, u);
-    show_result(i2, i3, u1, true, false);
+    // orbit i1 = orbit(Earth, 250000, 350000, 90);
+    // orbit i2 = orbit(Earth, 250000, 1075000, 90);
+    // orbit i3 = orbit(Earth, 0, 1075000, 90);
+    // dv_result u = i2.get_transfer_deltaV(i1);
+    // dv_result u1 = i3.get_transfer_deltaV(i2);
+    // show_result(i1, i2, u);
+    // show_result(i2, i3, u1, true, false);
 
     // orbit i1 = orbit(Earth, 200000, 200000, 0);
     // orbit i2 = orbit(Earth, 200000, Moon.get_orbit().get_pe(), Moon.get_orbit().get_inc());
